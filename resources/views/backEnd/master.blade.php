@@ -14,7 +14,13 @@
     <link href="{{asset('backEnd/css/style.css')}}" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link rel="stylesheet" href="path/to/material-design-iconic-font/css/material-design-iconic-font.min.css">
-
+    <link rel="stylesheet" href="{{asset('backEnd/')}}/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bootstrap.tagsinput/0.8.0/bootstrap-tagsinput.css">
+    <style>
+    .bootstrap-tagsinput .tag {
+color:blue;
+    }
+    </style>
 
 </head>
 
@@ -42,7 +48,7 @@
         crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/bootstrap.tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
 
 
 <script>

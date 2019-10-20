@@ -49,7 +49,7 @@
                   </a>
                 </li>
                 <li>
-                  <a href="#">Posts
+                  <a href="{{url('/post')}}">Posts
 
                   </a>
                 </li>
@@ -71,6 +71,9 @@
                 </li>
                 <li>
                   <a href="{{url('/role')}}">Role Management</a>
+                </li>
+                <li>
+                  <a href="{{url('/permission')}}">Permission Management</a>
                 </li>
               </ul>
             </div>

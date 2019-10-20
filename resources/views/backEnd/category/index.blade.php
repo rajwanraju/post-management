@@ -20,9 +20,9 @@
                 <td>
                 
                 @if($category->publicationStatus == 1)                	
-					                	<a href="{{ url('category/status/'.$category->id) }}"><i class="md md-close"></i> Unpublish</a>
+					                	<a href="{{ url('category/status/'.$category->id) }}"><i class="fas fa-times-circle fa-2x"></i></a>
 					                	@else
-					                	<a href="{{ url('category/status/'.$category->id) }}"><i class="md md-check"></i> Publish</a>
+					                	<a href="{{ url('category/status/'.$category->id) }}"><i class="fas fa-check-circle fa-2x"></i></a>
 					                	@endif
                 
                 </td>
