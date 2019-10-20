@@ -29,7 +29,10 @@ class LoginController extends Controller
          if($user->hasRole('admin')){
             return redirect('/'.$user_role.'/Dashboard');
         }
-        else if($user->hasRole('supplier')){
+        else if($user->hasRole('author')){
+            return redirect('/'.$user_role.'/Dashboard');
+        }
+        else if($user->hasRole('editor')){
             return redirect('/'.$user_role.'/Dashboard');
         }
         else if($user->hasRole('user')){

@@ -17,6 +17,11 @@
           </span>
 
           <span class="user-status">
+            <i class="fa fa-user"></i>
+            <strong>{{userRole(Auth::user()->id)}}</strong>
+          </span> 
+
+          <span class="user-status">
             <i class="fa fa-circle"></i>
             <span>Online</span>
           </span>
@@ -67,7 +72,7 @@
             <div class="sidebar-submenu">
               <ul>
                 <li>
-                  <a href="#">User Management</a>
+                  <a href="{{url('/users')}}">User Management</a>
                 </li>
                 <li>
                   <a href="{{url('/role')}}">Role Management</a>
@@ -97,9 +102,16 @@
         <i class="fa fa-cog"></i>
         <span class="badge-sonar"></span>
       </a>
-      <a href="#">
-        <i class="fa fa-power-off"></i>
-      </a>
+      
+       <a href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        <i class="fa fa-power-off"></i>{{ __('Logout') }}
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
     </div>
   </nav>
   <!-- sidebar-wrapper  -->

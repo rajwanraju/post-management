@@ -68,7 +68,7 @@ Post Management
                                 <label class="col-lg-3 col-form-label form-control-label">Feature Image</label>
                                     <div class="col-lg-9">
                       <div class="file-loading">
-                        <input id="file-1" type="file" name="photos[]" multiple class="file" data-overwrite-initial="false" data-min-file-count="4">
+                        <input id="file-1" type="file" name="photos" class="file" data-overwrite-initial="false" data-min-file-count="4">
                       </div>
                     </div>
                     </div>

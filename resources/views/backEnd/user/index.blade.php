@@ -17,27 +17,25 @@ Post Management
       <h2 class="text-center">Posts </h2>
       <hr>
         <div class="col-md-12">
-<a href="{{route('post.create')}}" class="btn btn-primary" style="float:right">Add Post</a>
+<a href="{{route('user.create')}}" class="btn btn-primary" style="float:right">Add New User</a>
         <table id="example" class="table table-striped table-bordered" style="width:100%">
         <thead>
             <tr>
-                <th>Title</th>
-                <th>Category</th>
-                <th>Author</th>
-                <th>Publish date</th>
-                <th>Status</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Join At</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($posts as $post)
+            @foreach($users as $user)
             <tr>
-                <td>{{$post->title}}</td>
-                <td>{{categoryName($post->category_id)}}</td>
-                <td>{{userName($post->user_id)}}</td>
-                <td>{{$post->created_at->diffForHumans()}}</td>
-                <td>{!! status($post->status) !!}</td>
-                <td>{{$post->title}}</td>
+                <td>{{$user->name}}</td>
+                <td>{{$user->email}}</td>
+                <td>{{userRole($user->id)}}</td>
+                <td>{{$user->created_at->diffForHumans()}}</td>
+                <td>{{$user->name}}</td>
             </tr>
             @endforeach
         </tfoot>

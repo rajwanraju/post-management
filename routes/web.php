@@ -23,6 +23,14 @@ Route::group(['middleware' => 'role:admin'], function() {
             //category
             Route::resource('category','CategoryController');
             Route::get('category/status/{id}','CategoryController@status');
+            
+            //user
+            Route::get('users', 'UserController@index');
+            Route::get('user/register', 'UserController@userRegister')->name('user.create');
+            Route::post('user/register', 'UserController@registerUser')->name('user.register');
+            Route::get('user/roleManagement/{id}', 'UserController@userManagement');
+            Route::post('user/roleManagement', 'UserController@roleManagement');
+
             //role
             Route::resource('role', 'RoleController');
             //permissions

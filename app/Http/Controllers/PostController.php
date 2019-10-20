@@ -7,13 +7,14 @@ use App\Category;
 use App\Post;
 use App\Postimage;
 use Auth;
-use Imagick;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class PostController extends Controller
 {
     public function index(){
-
-        return view('backEnd.post.index');
+        $posts = Post::all();
+        return view('backEnd.post.index',compact('posts'));
     }
 
     public function createPost(){
@@ -36,6 +37,9 @@ class PostController extends Controller
  
 {
 
+     $cover = $request->file('photos');
+    $extension = $cover->getClientOriginalExtension();
+    Storage::disk('public')->put($cover->getFilename().'.'.$extension,  File::get($cover));
     $post = new Post();
 
     $post->title = $request->title;
@@ -44,25 +48,10 @@ class PostController extends Controller
     $post->user_id = Auth::user()->id;
     $post->tags = json_encode($request->tags);
     $post->status = $request->status;
+    $post->image =  $cover->getFilename().'.'.$extension;
     $post->save();
 
    
-
-        foreach ($request->photos as $photo) {
-            $postImage = $photo;
-            
-            $name = $postImage->getClientOriginalName();
-            $uploadPath = 'Image/';
-            $postImage->move($uploadPath, $name);
-            $imageUrl = $uploadPath . $name;
-            // dd($imageUrl);
-    
-                PostImage::create([
-                    'post_id' => $post->id,
-                    'image' => $imageUrl,
-                ]);
-            }
-
 
 }
 
