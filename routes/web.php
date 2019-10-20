@@ -15,6 +15,19 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::group(['middleware' => 'role:admin'], function() {
+    //	Route::group(['middleware' => 'role:admin,edit-posts'], function() {});
+    
+            Route::get('/admin/Dashboard','AdminController@dashboard');
+
+            //category
+            Route::resource('category','CategoryController');
+            Route::get('category/status/{id}','CategoryController@status');
+            //role
+            Route::resource('role', 'RoleController');
+    });
+
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

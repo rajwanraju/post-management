@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -18,7 +18,32 @@ class LoginController extends Controller
     |
     */
 
+    protected function authenticated(Request $request, $user)
+    {
+
+        $auth_user = $request->user();
+        $roles = $auth_user->roles()->get();
+  
+        $user_role = $roles[0]->slug;
+        // dd($user_role);
+         if($user->hasRole('admin')){
+            return redirect('/'.$user_role.'/Dashboard');
+        }
+        else if($user->hasRole('supplier')){
+            return redirect('/'.$user_role.'/Dashboard');
+        }
+        else if($user->hasRole('user')){
+            return redirect()->back();
+        }
+
+        else{
+            return redirect('/');
+        }
+    }
+
     use AuthenticatesUsers;
+
+
 
     /**
      * Where to redirect users after login.
