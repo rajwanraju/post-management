@@ -51,13 +51,34 @@ class PostController extends Controller
     $post->image =  $cover->getFilename().'.'.$extension;
     $post->save();
 
-   
+   return redirect()->back()->with('success','Post Added. It will show after review.');
 
 }
 
 
 return redirect()->back()->with('error','Some Things Wrong');
 
+    }
+
+    public function postAssign($post_id,$user_id){
+
+        $post_id = \Crypt::decrypt($post_id);
+
+        $post = Post::where('id',$post_id)->first();
+        $post->editor_id = $user_id;
+        $post->save();
+
+
+
+ $details = [
+        'title' => $post->title,
+        'description' => $post->description
+    ];
+   
+    \Mail::to(userEmail($post->editor_id))->send(new \App\Mail\PostAssignMail($details));
+
+
+return redirect()->back()->with('success','Post Assign To Editor');
     }
 
 }

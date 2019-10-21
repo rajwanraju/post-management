@@ -77,7 +77,12 @@ Post Management
                                     <div class="col-lg-9">
                                     <select name="status" id="" class="form-control">
 		                                <option >Select Status</option>
+                                        @if(userRole(Auth::user()->id)=="author")
+                                        <option value="2">Send for Review</option>
+                                        @endif
+                                         @if(userRole(Auth::user()->id)=="editor")
                                         <option value="1">Published</option>
+                                        @endif
 		                                <option value="0">UnPublished</option>
 		                             </select>
                                     </div>

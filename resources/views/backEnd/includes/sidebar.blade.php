@@ -34,12 +34,13 @@
             <span>General</span>
           </li>
           <li class="sidebar-dropdown">
-            <a href="#">
+            <a href="{{url('/'.userRole(Auth::user()->id,true).'/Dashboard')}}">
               <i class="fa fa-tachometer-alt"></i>
               <span>Dashboard</span>
             </a>
       
           </li>
+          @if(userRole(Auth::user()->id)=="admin")
           <li class="sidebar-dropdown">
             <a href="#">
               <i class="fa fa-shopping-cart"></i>
@@ -83,7 +84,43 @@
               </ul>
             </div>
           </li>
-      
+      @endif
+        @if(userRole(Auth::user()->id)=="author")
+          <li class="sidebar-dropdown">
+            <a href="#">
+              <i class="fa fa-shopping-cart"></i>
+              <span>Post Management</span>
+              <span class="badge badge-pill badge-danger">3</span>
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li>
+                  <a href="{{url('/author/posts')}}">Posts
+
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </li>
+      @endif
+        @if(userRole(Auth::user()->id)=="editor")
+          <li class="sidebar-dropdown">
+            <a href="#">
+              <i class="fa fa-shopping-cart"></i>
+              <span>Post Management</span>
+              <span class="badge badge-pill badge-danger">3</span>
+            </a>
+            <div class="sidebar-submenu">
+              <ul>
+                <li>
+                  <a href="{{url('/editor/posts')}}">Posts
+
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </li>
+      @endif
         </ul>
       </div>
       <!-- sidebar-menu  -->

@@ -5,6 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Responsive sidebar template with sliding effect and dropdown menu based on bootstrap 3">
     <title>@yield('title')</title>
@@ -31,6 +32,7 @@ color:blue;
   </a>
 @include('backEnd.includes.sidebar')
   <main class="page-content">
+      @include('flash-message')
  @yield('body')
 
   </main>
@@ -38,6 +40,22 @@ color:blue;
 </div>
 <!-- page-wrapper -->
 
+<!-- modal -->
+
+  <div class="modal video-modal fade" id="product_modal" tabindex="-1" role="dialog" aria-labelledby="myModal">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <button type="button" class="close text-right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>            
+            
+              <section>
+                <div class="modal-body" id="modal_product_details">
+                
+                  <div class="clearfix"> </div>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
 
 
 
@@ -86,10 +104,48 @@ $(".page-wrapper").addClass("toggled");
 
 $(document).ready(function() {
     $('#example').DataTable();
+    $('.alert-message').fadeOut(5000);
 } );
 
 
 });
+</script>
+
+<script type="text/javascript">
+
+   $.ajaxSetup({
+
+        headers: {
+
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+
+        }
+
+    });
+  
+$('.showPost').click(function(){
+//get product by from ayttribute that i set the link
+        var post_id = $(this).attr('post_id');
+    
+    $.ajax({
+
+           type:'get',
+
+           url:'/post-info/'+post_id,
+
+           success:function(data){
+
+                 $('#modal_product_details').html(data);
+                        // Display the Bootstrap modal
+                 $('#product_modal').modal('show');
+
+           }
+
+        });
+  });
+
+
+
 </script>
     
 </body>
