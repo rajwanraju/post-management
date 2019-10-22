@@ -18,17 +18,23 @@ class AdminController extends Controller
     	$var_4th = User::whereNotIn('id',[1])->get();
     }
 
-       if(userRole(Auth::user()->id)=="editor"){
+       elseif(userRole(Auth::user()->id)=="editor"){
        	$posts = Post::where('editor_id',Auth::user()->id)->get();
     	$var_2nd = Post::where('editor_id',Auth::user()->id)->where('status',4)->get();
     	$var_3rd = Post::where('editor_id',Auth::user()->id)->where('status',1)->get();
     	$var_4th = Post::where('editor_id',Auth::user()->id)->where('status',3)->get();
        }
-       if(userRole(Auth::user()->id)=="author"){
+       elseif(userRole(Auth::user()->id)=="author"){
        	$posts = Post::where('user_id',Auth::user()->id)->get();
     	$var_2nd = Post::where('user_id',Auth::user()->id)->where('status',4)->get();
     	$var_3rd = Post::where('user_id',Auth::user()->id)->where('status',1)->get();
     	$var_4th = Post::where('user_id',Auth::user()->id)->where('status',3)->get();
+       }
+
+       else{
+
+         return redirect('/');
+
        }
     	
         return view('backEnd.dashboard.index',compact('posts','var_2nd','var_3rd','var_4th'));

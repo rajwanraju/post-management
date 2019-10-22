@@ -4,11 +4,13 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
         <title>Post Management</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
         <!-- Styles -->
@@ -53,109 +55,133 @@ padding: 0 20px 20px;
 }
 .blog-box-text h4 a {
     color: #333;
-}</style>
+}
+
+.review-like input[type="radio"] + .fas,
+.review-like input[type="radio"] + label > .fas { cursor: pointer; font-size: 20px; }
+
+/* Unchecked */
+.review-like input[type="radio"] + .fas:before,
+.review-like input[type="radio"] + label > .fas:before {   color: rgba(215, 215, 215, 1); }
+
+/* Checked */
+.review-like input[type="radio"]:checked + .fas:before,
+.review-like input[type="radio"]:checked + label > .fas:before {  color: var(--blue-color); }
+
+.review-like i {
+    color: rgba(215, 215, 215, 1) !important;
+    padding-right: 5px;
+}
+.hide {
+    display: none;
+}
+
+.myButton {
+    background-color:#0688fa;
+    border-radius:28px;
+    border:1px solid #18ab29;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    font-family:Arial;
+    font-size:12px;
+    padding:10px 20px;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #2f6627;
+}
+.myButton:hover {
+    background-color:#5cbf2a;
+}
+.myButton:active {
+    position:relative;
+    top:1px;
+}
+</style>
+
     </head>
     <body>
 
+@include('frontEnd.nav')
+@include('flash-message')
+     @yield('body')
 
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-            <a href="#" class="navbar-brand">Brand</a>
-            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-                <span class="navbar-toggler-icon"></span>
-            </button>
 
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <div class="navbar-nav">
-                  @if (Route::has('login'))
-                  @auth
-                  <a class="nav-item nav-link" href="{{ url('/home') }}">Home</a>
-                  @else
-                  <a class="nav-item nav-link" href="{{ route('login') }}">Login</a>
 
-                  @if (Route::has('register'))
-                  <a class="nav-item nav-link" href="{{ route('register') }}">Register</a>
-                  @endif
-                  @endauth
-                  @endif
-              </div>
-              <form class="form-inline ml-auto">
-               <ul class="navbar-nav ml-aut">
-                <!-- Dropdown -->
-                @auth
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                     {{Auth::user()->name}}
-                 </a>
-                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">Dashboard</a>
-                    <a class="dropdown-item" href="{{ route('logout') }}"
-                    onclick="event.preventDefault();
-                    document.getElementById('logout-form').submit();">
-                    <i class="fa fa-power-off"></i>{{ __('Logout') }}
-                </a>
+<!-- alert modal -->
 
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    @csrf
-                </form>
-            </div>
-            </li>
-            @endauth
-        </ul>
-    </form>
-</div>
-</nav>
+<!-- Button trigger modal -->
 
-       <div class="blog-section paddingTB60 ">
-<div class="container">
-    <div class="row">
-        <div class="site-heading text-center">
-                        <h3>Our Portfolio</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt <br> ut labore et dolore magna aliqua. Ut enim ad minim </p>
-                        <div class="border"></div>
-                    </div>
+
+<!-- Modal -->
+<div class="modal fade" id="alert_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title text-center">Alert</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        You need To Login for action.....
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
     </div>
-    <div class="row text-center">
-           <div class="col-sm-6 col-md-4">
-                            <div class="blog-box">
-                                <div class="blog-box-image">
-                                    <img src="https://images.pexels.com/photos/6384/woman-hand-desk-office.jpg?w=940&h=650&auto=compress&cs=tinysrgb" class="img-fluid img-thumbnaile" alt="">
-                                </div>
-                                <div class="blog-box-content">
-                                    <h4><a href="#">quis porta tellus dictum</a></h4>
-                                    <p>Phasellus lorem enim, luctus ut velit eget, convallis egestas eros. 
-                                    Sed ornare ligula eget tortor tempor, quis porta tellus dictum.</p>
-                                    <a href="" class="btn btn-default site-btn">Read More</a>
-                                </div>
-                            </div>
-                        </div> <!-- End Col -->                 
-            <div class="col-sm-6 col-md-4">
-                            <div class="blog-box">
-                                <div class="blog-box-image">
-                                    <img src="https://images.pexels.com/photos/374897/pexels-photo-374897.jpeg?w=940&h=650&auto=compress&cs=tinysrgb" class="img-fluid img-thumbnaile" alt="">
-                                </div>
-                                <div class="blog-box-content">
-                                    <h4><a href="#">quis porta tellus dictum</a></h4>
-                                    <p>Phasellus lorem enim, luctus ut velit eget, convallis egestas eros. 
-                                    Sed ornare ligula eget tortor tempor, quis porta tellus dictum.</p>
-                                    <a href="" class="btn btn-default site-btn">Read More</a>
-                                </div>
-                            </div>
-                        </div> <!-- End Col -->             
-            <div class="col-sm-6 col-md-4">
-                            <div class="blog-box">
-                                <div class="blog-box-image">
-                                    <img src="https://images.pexels.com/photos/541522/pexels-photo-541522.jpeg?w=940&h=650&auto=compress&cs=tinysrgb" class="img-fluid img-thumbnaile" alt="">
-                                </div>
-                                <div class="blog-box-content">
-                                    <h4><a href="#">quis porta tellus dictum</a></h4>
-                                    <p>Phasellus lorem enim, luctus ut velit eget, convallis egestas eros. 
-                                    Sed ornare ligula eget tortor tempor, quis porta tellus dictum.</p>
-                                    <a href="" class="btn btn-default site-btn">Read More</a>
-                                </div>
-                            </div>
-                        </div> <!-- End Col -->
-    </div>
+  </div>
 </div>
-</div>
+
+
+
+<script>
+
+$(document).ready(function() {
+
+    $('.alert').on('click',function(){
+
+        $('#alert_modal').modal();
+    });
+
+  $.ajaxSetup({
+
+        headers: {
+
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+
+        }
+
+    });
+  
+$('.like').click(function(){
+//get product by from ayttribute that i set the link
+        var post_id = $(this).attr('post_id');
+        var value = $(this).attr('value');
+    
+    $.ajax({
+
+            type:'POST',
+            data: {
+                        post_id:post_id,
+                        value:value
+                    },
+
+           url:'<?php echo url('like-dislike')?>',
+
+           success:function(data){
+           location.reload();
+
+           }
+
+        });
+  });
+
+});
+
+$(document).ready(function() {
+    $('#example').DataTable();
+    $('.alert-message').fadeOut(5000);
+} );
+</script>
     </body>
 </html>

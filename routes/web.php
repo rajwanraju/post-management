@@ -11,8 +11,18 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', 'IndexController@index');
+Route::get('post/{id}', 'IndexController@postDetails');
+
+
+Route::group(['middleware' => 'role:user'], function() {
+Route::post('/like-dislike', 'IndexController@likedislike');
+Route::post('/comment', 'IndexController@comment')->name('comment');
+Route::get('/wishlist/{id}', 'IndexController@wishPost');
+Route::get('/likepost', 'IndexController@likePost');
+Route::get('/dislikePost', 'IndexController@dislikePost');
+Route::get('/wishlistPost', 'IndexController@wishlistPost');
+
 });
 
 Route::group(['middleware' => 'role:admin'], function() {

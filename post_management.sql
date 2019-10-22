@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Oct 20, 2019 at 01:49 PM
--- Server version: 10.3.16-MariaDB
--- PHP Version: 7.3.7
+-- Host: 127.0.0.1
+-- Generation Time: Oct 22, 2019 at 09:56 AM
+-- Server version: 10.1.38-MariaDB
+-- PHP Version: 7.2.15
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -47,6 +47,23 @@ INSERT INTO `categories` (`id`, `categoryName`, `categoryDescription`, `publicat
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `comments`
+--
+
+CREATE TABLE `comments` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `post_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `comment` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `failed_jobs`
 --
 
@@ -56,7 +73,7 @@ CREATE TABLE `failed_jobs` (
   `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -85,8 +102,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (55, '2019_10_19_144101_create_users_roles_table', 1),
 (56, '2019_10_19_144243_create_roles_permissions_table', 1),
 (57, '2019_10_20_064049_create_categories_table', 2),
-(58, '2019_10_20_105429_create_posts_table', 3),
-(59, '2019_10_20_105818_create_post_images_table', 4);
+(60, '2019_10_20_105429_create_posts_table', 3),
+(61, '2019_10_22_045513_create_post_likes_table', 4),
+(62, '2019_10_22_062722_create_wish_posts_table', 5),
+(63, '2019_10_22_074217_create_comments_table', 6);
 
 -- --------------------------------------------------------
 
@@ -135,8 +154,10 @@ CREATE TABLE `posts` (
   `title` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` int(11) NOT NULL,
+  `editor_id` int(11) DEFAULT NULL,
   `category_id` int(11) NOT NULL,
   `tags` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -146,23 +167,35 @@ CREATE TABLE `posts` (
 -- Dumping data for table `posts`
 --
 
-INSERT INTO `posts` (`id`, `title`, `description`, `user_id`, `category_id`, `tags`, `status`, `created_at`, `updated_at`) VALUES
-(5, 'vcxbcvbnvfgnhcfgh', 'xdfyhftgh', 1, 1, '[\"dxrtyhyh\"]', 1, '2019-10-20 05:33:00', '2019-10-20 05:33:00'),
-(6, 'rajwanraju', 'fhbfgh', 1, 1, '[\"xfdthfgh\"]', 1, '2019-10-20 05:33:24', '2019-10-20 05:33:24');
+INSERT INTO `posts` (`id`, `title`, `description`, `user_id`, `editor_id`, `category_id`, `tags`, `image`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'SZCdzscsdf', 'sdfsdfsdf', 1, 4, 1, '[\"safsfsdf\"]', 'phpA4A2.tmp.jpg', 4, '2019-10-20 11:32:58', '2019-10-21 04:16:44'),
+(2, 'rajwanraju', 'sdfsdfd', 1, 5, 1, '[\"zsdfsefsdf\"]', 'php2F86.tmp.jpg', 1, '2019-10-20 11:39:02', '2019-10-20 11:39:02'),
+(3, 'author test post', 'author test post author test post author test post', 3, 4, 1, '[\"author test post\"]', 'phpC2F7.tmp.jpg', 4, '2019-10-21 00:07:28', '2019-10-21 03:29:07');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `post_images`
+-- Table structure for table `post_likes`
 --
 
-CREATE TABLE `post_images` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `image` text COLLATE utf8mb4_unicode_ci NOT NULL,
+CREATE TABLE `post_likes` (
+  `id` bigint(20) UNSIGNED NOT NULL,
   `post_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `like_dislike` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `post_likes`
+--
+
+INSERT INTO `post_likes` (`id`, `post_id`, `user_id`, `like_dislike`, `created_at`, `updated_at`) VALUES
+(9, 1, 3, 1, '2019-10-21 23:12:33', '2019-10-21 23:34:13'),
+(14, 2, 3, 1, '2019-10-21 23:20:30', '2019-10-21 23:20:30'),
+(15, 3, 3, 0, '2019-10-21 23:39:04', '2019-10-21 23:40:32'),
+(16, 1, 7, 1, '2019-10-22 00:47:29', '2019-10-22 00:47:29');
 
 -- --------------------------------------------------------
 
@@ -184,7 +217,9 @@ CREATE TABLE `roles` (
 
 INSERT INTO `roles` (`id`, `slug`, `name`, `created_at`, `updated_at`) VALUES
 (1, 'admin', 'Adminitration', '2019-10-19 23:05:24', '2019-10-19 23:05:24'),
-(4, 'author', 'Author', '2019-10-20 01:19:09', '2019-10-20 01:19:09');
+(4, 'author', 'Author', '2019-10-20 01:19:09', '2019-10-20 01:19:09'),
+(5, 'editor', 'Editor', '2019-10-20 13:01:29', '2019-10-20 13:01:29'),
+(6, 'user', 'User', '2019-10-22 00:13:06', '2019-10-22 00:13:06');
 
 -- --------------------------------------------------------
 
@@ -206,7 +241,9 @@ INSERT INTO `roles_permissions` (`role_id`, `permission_id`) VALUES
 (1, 2),
 (1, 3),
 (4, 1),
-(4, 2);
+(4, 2),
+(5, 2),
+(6, 4);
 
 -- --------------------------------------------------------
 
@@ -230,7 +267,12 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Admin', 'admin@gmail.com', NULL, '$2y$10$4WuS7fResZDjMSx3jNFwYu9yJc40pAMTRaWbNmBwfvDUxS4YUtwPO', NULL, '2019-10-19 23:05:24', '2019-10-19 23:05:24');
+(1, 'Admin', 'admin@gmail.com', NULL, '$2y$10$4WuS7fResZDjMSx3jNFwYu9yJc40pAMTRaWbNmBwfvDUxS4YUtwPO', NULL, '2019-10-19 23:05:24', '2019-10-19 23:05:24'),
+(3, 'demo author', 'demo-author@gmail.com', NULL, '$2y$10$qbLxsxmxNyNNDA0C9zLSnOIa3zSCohVqI6K5PqVTxjYDn.wqT.Yz6', NULL, '2019-10-20 13:00:15', '2019-10-20 13:00:15'),
+(4, 'demo editor', 'demo-editor@gmail.com', NULL, '$2y$10$4WuS7fResZDjMSx3jNFwYu9yJc40pAMTRaWbNmBwfvDUxS4YUtwPO', NULL, '2019-10-20 13:02:00', '2019-10-20 13:02:00'),
+(5, 'Editor 2', 'editor2@gmail.com', NULL, '$2y$10$3MsouVjjX69eaO3YVuETTe3gHcqEs05sXRloNZKvTdvIk1knfpAsS', NULL, '2019-10-21 03:02:40', '2019-10-21 03:02:40'),
+(6, 'demo user', 'demo-user@gmail.com', NULL, '$2y$10$2UUtZfjE7s5HpOL5l5f2HOHnnTJvmLrX0p/wlRl1/q.qQKek50WIu', NULL, '2019-10-22 00:08:15', '2019-10-22 00:08:15'),
+(7, 'demo user', 'user@gmail.com', NULL, '$2y$10$UZRKJOmiiZTTgbe19dc.buor1XF1KjpqzLqwCsETXWaaiCytX0lhy', NULL, '2019-10-22 00:13:53', '2019-10-22 00:13:53');
 
 -- --------------------------------------------------------
 
@@ -259,7 +301,33 @@ CREATE TABLE `users_roles` (
 --
 
 INSERT INTO `users_roles` (`user_id`, `role_id`) VALUES
-(1, 1);
+(1, 1),
+(3, 4),
+(4, 5),
+(5, 5),
+(7, 6);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wish_posts`
+--
+
+CREATE TABLE `wish_posts` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `post_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `status` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `wish_posts`
+--
+
+INSERT INTO `wish_posts` (`id`, `post_id`, `user_id`, `status`, `created_at`, `updated_at`) VALUES
+(4, 1, 7, 1, '2019-10-22 00:58:47', '2019-10-22 00:58:47');
 
 --
 -- Indexes for dumped tables
@@ -269,6 +337,12 @@ INSERT INTO `users_roles` (`user_id`, `role_id`) VALUES
 -- Indexes for table `categories`
 --
 ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `comments`
+--
+ALTER TABLE `comments`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -302,9 +376,9 @@ ALTER TABLE `posts`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `post_images`
+-- Indexes for table `post_likes`
 --
-ALTER TABLE `post_images`
+ALTER TABLE `post_likes`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -342,6 +416,12 @@ ALTER TABLE `users_roles`
   ADD KEY `users_roles_role_id_foreign` (`role_id`);
 
 --
+-- Indexes for table `wish_posts`
+--
+ALTER TABLE `wish_posts`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -350,6 +430,12 @@ ALTER TABLE `users_roles`
 --
 ALTER TABLE `categories`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `comments`
+--
+ALTER TABLE `comments`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -361,7 +447,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT for table `permissions`
@@ -373,25 +459,31 @@ ALTER TABLE `permissions`
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `post_images`
+-- AUTO_INCREMENT for table `post_likes`
 --
-ALTER TABLE `post_images`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+ALTER TABLE `post_likes`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `wish_posts`
+--
+ALTER TABLE `wish_posts`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables

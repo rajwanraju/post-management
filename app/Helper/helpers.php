@@ -45,6 +45,8 @@ if (! function_exists('userEmail')) {
         return \App\User::findorfail($id)->email;
     }
 }
+
+
 if (! function_exists('userRole')) {
     function userRole($id,$slug="") {
         $role_id = \DB::table('users_roles')->where('user_id',$id)->first();
@@ -76,3 +78,39 @@ if (! function_exists('status')) {
 }
     }
 }
+
+if (! function_exists('like')) {
+    function like($post_id) {
+
+return \App\PostLike::where('post_id',$post_id)->where('like_dislike',1)->count();
+
+        }
+    }
+
+    if (! function_exists('like_check')) {
+    function like_check($post_id) {
+
+return \App\PostLike::where('user_id',Auth::user()->id)->where('post_id',$post_id)->where('like_dislike',1)->first();
+
+        }
+    }
+
+
+if (! function_exists('dislike')) {
+    function dislike($post_id) {
+
+return \App\PostLike::where('post_id',$post_id)->where('like_dislike',0)->count();
+
+        }
+    }
+
+        if (! function_exists('dislike_check')) {
+    function dislike_check($post_id) {
+
+return \App\PostLike::where('user_id',Auth::user()->id)->where('post_id',$post_id)->where('like_dislike',0)->first();
+
+        }
+    } 
+
+
+
